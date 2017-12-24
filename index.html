@@ -15,7 +15,7 @@
   
   
   <!-- Custom styles for this template -->
-  <link href="album.css" rel="stylesheet">
+  <!-- <link href="album.css" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -24,23 +24,17 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-8 py-4">
-            <h4 class="text-white">About</h4>
-            <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+            <h4 class="text-white" @click="role='Player'">Player</h4>
           </div>
-          <div class="col-sm-4 py-4">
-            <h4 class="text-white">Contact</h4>
-            <ul class="list-unstyled">
-              <li><a href="#" class="text-white">Follow on Twitter</a></li>
-              <li><a href="#" class="text-white">Like on Facebook</a></li>
-              <li><a href="#" class="text-white">Email me</a></li>
-            </ul>
+          <div class="col-sm-8 py-4">
+            <h4 class="text-white" @click="role='Banker'">Banker</h4>
           </div>
         </div>
       </div>
     </div>
     <div class="navbar navbar-inverse bg-inverse">
       <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand">Album</a>
+        <a href="#" class="navbar-brand">{{currentPlayer || role}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,17 +42,25 @@
     </div>
     
     <section class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">{{message}}</h1>
-        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-        <p>
-          <a href="#" class="btn btn-primary">Main call to action</a>
-          <a href="#" class="btn btn-secondary">Secondary action</a>
-        </p>
-      </div>
+      <template v-if="currentPlayer == null">
+        <h1>Login Player</h1>
+        <input type="text" v-model=loginBox>
+        <a href='#' class="btn btn-primary" @click="currentPlayer = loginBox">Login</a>
+      </template>
+      <template v-else>
+          <div class="container">
+              <h1 class="jumbotron-heading">${{currentMoney}}</h1>
+              <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+              <p>
+                <a href="#" class="btn btn-primary">Main call to action</a>
+                <a href="#" class="btn btn-secondary">Secondary action</a>
+              </p>
+            </div>
+      </template>
+      
     </section>
     
-    <div class="album text-muted">
+    <!-- <div class="album text-muted">
       <div class="container">
         
         <div class="row">
@@ -113,7 +115,7 @@
         <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
         <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
       </div>
-    </footer>
+    </footer> -->
     
     <!-- Bootstrap core JavaScript
       ================================================== -->
@@ -138,7 +140,11 @@
       var app = new Vue({
         el: '#app',
         data: {
-          message: 'Hello Vue!'
+          message: 'Hello Vue!',
+          role: 'Player',
+          loginBox: '',
+          currentPlayer: null,
+          currentMoney: 1500
         }
       })
     </script>
